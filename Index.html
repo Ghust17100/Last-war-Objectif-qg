@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plans QG par groupe</title>
+<style>
+  body{font-family:sans-serif;max-width:860px;margin:0 auto;padding:20px;background:#f9f9f7;color:#1a1a18}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px}
+  .sub{font-size:14px;color:#5f5e5a;margin-bottom:22px}
+  .tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+  .tab{padding:6px 16px;font-size:13px;border:1px solid #d3d1c7;border-radius:20px;cursor:pointer;background:transparent;color:#5f5e5a}
+  .tab.active{background:#fff;color:#1a1a18;border-color:#888780;font-weight:500}
+  .page{display:none}.page.active{display:block}
+  .group-header{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .group-title{font-size:18px;font-weight:500;color:#1a1a18}
+  .group-sub{font-size:13px;color:#5f5e5a}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .stat{background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:10px 14px;flex:1;min-width:110px}
+  .stat-label{font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+  .stat-val{font-size:17px;font-weight:500;color:#1a1a18}
+  .stat-val.green{color:#27500A}
+  .stat-val.blue{color:#0C447C}
+  .section-title{font-size:14px;font-weight:500;color:#1a1a18;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid #e8e6de}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+  th{font-weight:500;text-align:left;padding:7px 10px;font-size:11px;color:#5f5e5a;border-bottom:1px solid #e8e6de;text-transform:uppercase;letter-spacing:.04em;background:#f5f4f0}
+  td{padding:8px 10px;border-bottom:1px solid #e8e6de;color:#1a1a18;vertical-align:top;line-height:1.5}
+  tr:last-child td{border-bottom:none}
+  tr.key{background:#f0f8f4}
+  .badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+  .b-green{background:#EAF3DE;color:#27500A}
+  .b-blue{background:#E6F1FB;color:#0C447C}
+  .b-amber{background:#FAEEDA;color:#633806}
+  .b-red{background:#FCEBEB;color:#791F1F}
+  .week-block{background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+  .week-label{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .week-num{width:26px;height:26px;border-radius:50%;background:#E6F1FB;color:#0C447C;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .week-num.green{background:#EAF3DE;color:#27500A}
+  .week-num.amber{background:#FAEEDA;color:#633806}
+  .f1{font-size:12px;color:#1a1a18;padding-left:4px;line-height:1.8}
+  .f1 span{color:#5f5e5a}
+  .tip{background:#f1f9f5;border-left:3px solid #1D9E75;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#5f5e5a;line-height:1.6;margin:10px 0}
+  .warn{background:#fdf6eb;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#5f5e5a;line-height:1.6;margin:10px 0}
+  .toggle-btn{background:transparent;border:1px solid #d3d1c7;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;color:#5f5e5a;margin-bottom:12px}
+  .toggle-btn.active{background:#fff;border-color:#888780;color:#1a1a18;font-weight:500}
+  .plan-section{display:none}.plan-section.active{display:block}
+  @media(max-width:500px){.stat{min-width:80px}}
+</style>
+</head>
+<body>
+
+<h1>Plans de montée QG — Par groupe</h1>
+<p class="sub">Basé sur les temps officiels · 2 et 3 constructeurs · Avec buffs Capitole (-30% estimé)</p>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showGroup('g20',this)">Groupe QG 20 → 22</button>
+  <button class="tab" onclick="showGroup('g21',this)">Groupe QG 21 → 23</button>
+  <button class="tab" onclick="showGroup('g22',this)">Groupe QG 22 → 24</button>
+  <button class="tab" onclick="showGroup('g23',this)">Groupe QG 23 → 25</button>
+</div>
+
+<!-- GROUPE QG 20 -->
+<div id="g20" class="page active">
+  <div class="group-header">
+    <div>
+      <div class="group-title">Groupe QG 20 → 22</div>
+      <div class="group-sub">2 niveaux à monter · Palier le plus accessible</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-label">Temps QG brut</div><div class="stat-val">13j 10h</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (2 constr.)</div><div class="stat-val green">~10 jours</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (3 constr.)</div><div class="stat-val green">~8-9 jours</div></div>
+    <div class="stat"><div class="stat-label">Héros débloqués</div><div class="stat-val blue">Niv. 110</div></div>
+  </div>
+
+  <div class="section-title">Prérequis à avoir avant de lancer chaque QG</div>
+  <table>
+    <thead><tr><th>Objectif</th><th>Prérequis obligatoires</th><th>Temps moyen bâtiment</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td><strong>QG 21</strong></td><td>Tech Center 20 · Tank Center 20 · Drill Ground 20</td><td>~4-5j chacun</td><td><span class="badge b-amber">À préparer en file 2</span></td></tr>
+      <tr><td><strong>QG 22</strong></td><td>Tech Center 21 · Drill Ground 21</td><td>~5-6j chacun</td><td><span class="badge b-amber">Lancer dès QG 20 en cours</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Plan semaine par semaine</div>
+  <div style="margin-bottom:10px">
+    <button class="toggle-btn active" onclick="togglePlan('g20','2c',this)">2 constructeurs</button>
+    <button class="toggle-btn" onclick="togglePlan('g20','3c',this)">3 constructeurs</button>
+  </div>
+
+  <div id="g20-2c" class="plan-section active">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Lancer les prérequis + QG 21</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Lancer Tech Center 20 (priorité absolue)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tank Center 20 en parallèle</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs universels sur file 1 + buff Secrétaire Dev</span></div>
+        <div>⭐ <strong>Vendredi VS :</strong> <span>Terminer Tank Center 20, lancer Drill Ground 20</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech Center 20 terminé → lancer QG 21 en file 1</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 21 en cours + prérequis QG 22</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 21 en cours (~6j 19h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 21 dès que possible</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 21 pour le terminer + points VS</span></div>
+        <div>📌 <strong>Fin S2 :</strong> <span>QG 21 terminé → lancer QG 22 immédiatement si Tech 21 ok</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num amber">S3</div><strong>Semaine 3 — QG 22 · Objectif atteint</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 22 en cours (~6j 15h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Drill Ground 21 si pas encore fait</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Derniers accélérateurs pour terminer QG 22</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 22 atteint en ~2,5 semaines avec buffs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="g20-3c" class="plan-section">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Triple file active dès le départ</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 20</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tank Center 20</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Drill Ground 20</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs universels sur file 1 (Tech Center) en priorité</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tous les prérequis QG 21 terminés → QG 21 lancé dès fin de semaine</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 21 + prérequis QG 22 en parallèle</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 21</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 21</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Drill Ground 21</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 21 → terminer tôt → lancer QG 22</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 22 lancé en milieu de semaine 2 → objectif atteint en ~10 jours</span></div>
+      </div>
+    </div>
+    <div class="tip">Avec 3 constructeurs, ce groupe peut viser QG 22 en moins de 2 semaines. La file 3 élimine complètement les blocages de prérequis.</div>
+  </div>
+</div>
+
+<!-- GROUPE QG 21 -->
+<div id="g21" class="page">
+  <div class="group-header">
+    <div>
+      <div class="group-title">Groupe QG 21 → 23</div>
+      <div class="group-sub">2 niveaux à monter · Palier intermédiaire</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-label">Temps QG brut</div><div class="stat-val">13j 22h</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (2 constr.)</div><div class="stat-val green">~10-11 jours</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (3 constr.)</div><div class="stat-val green">~8-9 jours</div></div>
+    <div class="stat"><div class="stat-label">Héros débloqués</div><div class="stat-val blue">Niv. 115</div></div>
+  </div>
+
+  <div class="section-title">Prérequis à avoir avant de lancer chaque QG</div>
+  <table>
+    <thead><tr><th>Objectif</th><th>Prérequis obligatoires</th><th>Temps moyen bâtiment</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td><strong>QG 22</strong></td><td>Tech Center 21 · Drill Ground 21</td><td>~5-6j chacun</td><td><span class="badge b-amber">À préparer dès maintenant</span></td></tr>
+      <tr><td><strong>QG 23</strong></td><td>Tech Center 22 · Wall 22</td><td>~6-7j chacun</td><td><span class="badge b-amber">Lancer dès QG 21 en cours</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Plan semaine par semaine</div>
+  <div style="margin-bottom:10px">
+    <button class="toggle-btn active" onclick="togglePlan('g21','2c',this)">2 constructeurs</button>
+    <button class="toggle-btn" onclick="togglePlan('g21','3c',this)">3 constructeurs</button>
+  </div>
+
+  <div id="g21-2c" class="plan-section active">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Prérequis QG 22 + QG 22 lancé</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 21 en priorité</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Drill Ground 21</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech Center 21 + buff Dev</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech 21 + Drill 21 terminés → lancer QG 22 en file 1</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 22 + prérequis QG 23</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 22 (~6j 15h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 22</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 22</span></div>
+        <div>📌 <strong>Fin S2 :</strong> <span>QG 22 terminé → lancer QG 23 dès que Wall 22 est prêt</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num amber">S3</div><strong>Semaine 3 — QG 23 · Objectif atteint</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 23 (~7j 7h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Wall 22 si pas encore terminé</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Derniers accélérateurs pour finir QG 23</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 23 atteint en ~2,5-3 semaines</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="g21-3c" class="plan-section">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Triple file</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 21</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Drill Ground 21</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Wall 22 (anticipe déjà le QG 23 !)</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech 21 en priorité</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Prérequis QG 22 terminés + Wall 22 bien avancé → QG 22 lancé</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 22 + Tech 22 + dernier prérequis</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 22</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 22</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Finir Wall 22 si besoin</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 22 → lancer QG 23 dès terminé</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 23 lancé en milieu de semaine 2 → objectif ~10-11 jours</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUPE QG 22 -->
+<div id="g22" class="page">
+  <div class="group-header">
+    <div>
+      <div class="group-title">Groupe QG 22 → 24</div>
+      <div class="group-sub">2 niveaux à monter · Palier exigeant</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-label">Temps QG brut</div><div class="stat-val">17j 18h</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (2 constr.)</div><div class="stat-val green">~13-14 jours</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (3 constr.)</div><div class="stat-val green">~11-12 jours</div></div>
+    <div class="stat"><div class="stat-label">Héros débloqués</div><div class="stat-val blue">Niv. 120</div></div>
+  </div>
+
+  <div class="section-title">Prérequis à avoir avant de lancer chaque QG</div>
+  <table>
+    <thead><tr><th>Objectif</th><th>Prérequis obligatoires</th><th>Temps moyen bâtiment</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td><strong>QG 23</strong></td><td>Tech Center 22 · Wall 22</td><td>~6-7j chacun</td><td><span class="badge b-amber">À préparer dès maintenant</span></td></tr>
+      <tr class="key"><td><strong>QG 24</strong></td><td>Tech Center 23 · Alliance Center 23</td><td>~7-9j chacun</td><td><span class="badge b-red">Alliance Center souvent oublié !</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">Alliance Center 23 est souvent le bâtiment oublié. Vérifie son niveau MAINTENANT. S'il est en retard, lance-le en file 2 immédiatement — il peut bloquer QG 24 à lui seul.</div>
+
+  <div class="section-title">Plan semaine par semaine</div>
+  <div style="margin-bottom:10px">
+    <button class="toggle-btn active" onclick="togglePlan('g22','2c',this)">2 constructeurs</button>
+    <button class="toggle-btn" onclick="togglePlan('g22','3c',this)">3 constructeurs</button>
+  </div>
+
+  <div id="g22-2c" class="plan-section active">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Prérequis QG 23</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 22</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Wall 22</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech Center 22 + buff Dev</span></div>
+        <div>⭐ <strong>Vendredi VS :</strong> <span>Accélérateurs sur Wall 22</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech 22 + Wall 22 terminés → QG 23 lancé immédiatement</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 23 + Alliance Center 23</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 23 (~7j 7h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Alliance Center 23 en parallèle — ne pas attendre !</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 23</span></div>
+        <div>📌 <strong>Fin S2 :</strong> <span>QG 23 terminé → vérifier Tech 23 et Alliance Center 23</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num amber">S3</div><strong>Semaine 3 — QG 24 · Objectif atteint</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 23 si pas terminé + QG 24 dès prêt</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Finir Alliance Center 23</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 24</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 24 atteint en ~3 semaines</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="g22-3c" class="plan-section">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Triple file sur prérequis</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 22</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Wall 22</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Alliance Center 23 (anticipe QG 24 dès maintenant)</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech 22</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech 22 + Wall 22 terminés → QG 23 lancé + Alliance Center en cours</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 23 + Tech 23 + Alliance Center</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 23</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 23</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Finir Alliance Center 23</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 23 → lancer QG 24 dès terminé</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 24 lancé fin S2 → objectif atteint en ~12-13 jours</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUPE QG 23 -->
+<div id="g23" class="page">
+  <div class="group-header">
+    <div>
+      <div class="group-title">Groupe QG 23 → 25</div>
+      <div class="group-sub">2 niveaux à monter · Palier le plus long</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-label">Temps QG brut</div><div class="stat-val">25j 8h</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (2 constr.)</div><div class="stat-val green">~18-19 jours</div></div>
+    <div class="stat"><div class="stat-label">Avec buffs (3 constr.)</div><div class="stat-val green">~15-16 jours</div></div>
+    <div class="stat"><div class="stat-label">Héros débloqués</div><div class="stat-val blue">Niv. 125</div></div>
+  </div>
+
+  <div class="section-title">Prérequis à avoir avant de lancer chaque QG</div>
+  <table>
+    <thead><tr><th>Objectif</th><th>Prérequis obligatoires</th><th>Temps moyen bâtiment</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td><strong>QG 24</strong></td><td>Tech Center 23 · Alliance Center 23</td><td>~7-9j chacun</td><td><span class="badge b-amber">À préparer immédiatement</span></td></tr>
+      <tr class="key"><td><strong>QG 25</strong></td><td>Tech Center 24 · Tank Center 24</td><td>~9-11j chacun</td><td><span class="badge b-red">Les plus longs du jeu avant QG 25</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">C'est le palier le plus difficile. QG 24→25 prend seul ~14j 21h bruts. Avec les prérequis Tech 24 et Tank Center 24, il faut absolument les avoir en parallèle en file 2 dès que QG 24 est lancé sinon on peut perdre 1-2 semaines de blocage.</div>
+
+  <div class="section-title">Plan semaine par semaine</div>
+  <div style="margin-bottom:10px">
+    <button class="toggle-btn active" onclick="togglePlan('g23','2c',this)">2 constructeurs</button>
+    <button class="toggle-btn" onclick="togglePlan('g23','3c',this)">3 constructeurs</button>
+  </div>
+
+  <div id="g23-2c" class="plan-section active">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Prérequis QG 24</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 23</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Alliance Center 23</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech 23 + buff Dev obligatoire</span></div>
+        <div>⭐ <strong>Vendredi VS :</strong> <span>Accélérateurs sur Alliance Center 23</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech 23 + Alliance Center 23 terminés → QG 24 lancé immédiatement</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 24 + Tech Center 24</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 24 (~10j 11h)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Tech Center 24 — lancer dès le début de S2, pas d'attente</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 24 en priorité</span></div>
+        <div>⭐ <strong>Vendredi VS :</strong> <span>Accélérateurs sur Tech 24</span></div>
+        <div>📌 <strong>Mi-S2 :</strong> <span>QG 24 terminé avec buffs → lancer Tank Center 24 en file 2</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num amber">S3</div><strong>Semaine 3 — QG 25 · Objectif final</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 25 (~14j 21h bruts → ~10j avec buffs)</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Finir Tank Center 24 si pas encore terminé</span></div>
+        <div>⭐ <strong>Chaque mardi :</strong> <span>Tous les accélérateurs universels sur QG 25 — c'est la priorité absolue</span></div>
+        <div>⭐ <strong>Buff Dev :</strong> <span>Postule CHAQUE mardi et vendredi sans exception</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 25 atteint en ~3 semaines (avec buffs et accélérateurs bien utilisés)</span></div>
+      </div>
+    </div>
+    <div class="tip">Pour ce groupe, le mardi est critique. QG 24→25 est la construction la plus longue du parcours. Chaque accélérateur universel utilisé le mardi sur cette construction = 1-2 jours gagnés. Ne jamais les dépenser ailleurs pendant ces 3 semaines.</div>
+  </div>
+
+  <div id="g23-3c" class="plan-section">
+    <div class="week-block">
+      <div class="week-label"><div class="week-num green">S1</div><strong>Semaine 1 — Triple file pour éliminer tous les prérequis d'un coup</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>Tech Center 23</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Alliance Center 23</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Tech Center 24 (anticipe directement QG 25 !)</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur Tech 23 pour le finir vite</span></div>
+        <div>📌 <strong>Fin S1 :</strong> <span>Tech 23 + Alliance 23 terminés → QG 24 lancé · Tech 24 bien avancé</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num blue">S2</div><strong>Semaine 2 — QG 24 + Tank Center 24 + finir Tech 24</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 24</span></div>
+        <div>🔨 <strong>File 2 :</strong> <span>Finir Tech Center 24</span></div>
+        <div>🔨 <strong>File 3 :</strong> <span>Tank Center 24 — lancer immédiatement</span></div>
+        <div>⭐ <strong>Mardi VS :</strong> <span>Accélérateurs sur QG 24 → lancer QG 25 dès terminé</span></div>
+        <div>📌 <strong>Fin S2 :</strong> <span>QG 24 terminé, QG 25 lancé, Tank 24 en cours en file 2</span></div>
+      </div>
+    </div>
+    <div class="week-block">
+      <div class="week-label"><div class="week-num amber">S3</div><strong>Semaine 3 — Sprint final QG 25</strong></div>
+      <div class="f1">
+        <div>🔨 <strong>File 1 :</strong> <span>QG 25 (~14j bruts → ~10j avec buffs)</span></div>
+        <div>🔨 <strong>File 2/3 :</strong> <span>Finir Tank 24 + commencer prochains prérequis</span></div>
+        <div>⭐ <strong>Chaque mardi :</strong> <span>TOUS les accélérateurs sur QG 25</span></div>
+        <div>✅ <strong>Résultat :</strong> <span>QG 25 atteint en ~15-16 jours avec 3 constructeurs et buffs optimisés</span></div>
+      </div>
+    </div>
+    <div class="tip">Avec 3 constructeurs, ce groupe peut atteindre QG 25 en moins de 3 semaines — la file 3 élimine le goulot d'étranglement des prérequis longs et permet de lancer QG 25 beaucoup plus tôt.</div>
+  </div>
+</div>
+
+<script>
+function showGroup(id, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+function togglePlan(group, plan, btn){
+  const page = document.getElementById(group);
+  page.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  page.querySelectorAll('.plan-section').forEach(s=>s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(group+'-'+plan).classList.add('active');
+}
+</script>
+</body>
+</html>
